@@ -7,7 +7,7 @@ import {setIsUserAuthorization, setUser} from '../store/models/user';
 const LoginScreen = () => {
   const [citizenId, setOnCitizenIdChange] = useState('');
   const [phoneNumber, setOnPhoneNumberChange] = useState('');
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const dispatch = useDispatch();
   const onLogin = () => {
     if (citizenId !== null && phoneNumber !== null) {
@@ -20,15 +20,26 @@ const LoginScreen = () => {
     }
   };
 
-  // if (citizenId === '' || phoneNumber === '') return setDisabled(true);
-
+  console.log(disabled);
+  const onCitizenIdChange = text => {
+    if (text !== '') {
+      setDisabled(false);
+    }
+    setOnCitizenIdChange(text);
+  };
+  const onPhoneNumberChange = text => {
+    if (text !== '') {
+      setDisabled(false);
+    }
+    setOnPhoneNumberChange(text);
+  };
   return (
     <View style={styles.container}>
       <Text>Citizen ID</Text>
       <TextInput
         placeholder="enter Citizen ID"
         value={citizenId}
-        onChangeText={setOnCitizenIdChange}
+        onChangeText={onCitizenIdChange}
         style={styles.input}
         keyboardType="numeric"
         maxLength={13}
@@ -37,7 +48,7 @@ const LoginScreen = () => {
       <TextInput
         placeholder="enter Phone Number"
         value={phoneNumber}
-        onChangeText={setOnPhoneNumberChange}
+        onChangeText={onPhoneNumberChange}
         style={styles.input}
         keyboardType="numeric"
         maxLength={10}
